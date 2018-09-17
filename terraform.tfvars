@@ -1,4 +1,4 @@
-aws_profile = "awsprofile"
+aws_profile = "default"
 aws_region = "eu-west-1"
 
 vpc_cidrblock = "10.0.0.0/16"
