@@ -14,26 +14,16 @@ resource "aws_vpc" "mainVPC" {
 
 ### Set up subnets
 
-resource "aws_subnet" "subnet_az1" {
-	count = 2
+resource "aws_subnet" "subnet" {
+	count = 4
 	vpc_id            = "${aws_vpc.mainVPC.id}"
 	cidr_block        = "10.2.${count.index}.0/24"
-    availability_zone = "${var.availability_zone_1}"
+    availability_zone = "${lookup(var.availability_zone, count.index % 2)}"
 
 	tags {
-	  Name = "${format("subnet_az1", count.index + 1)}"
+	  Name = "${format("subnet-", count.index + 1)}"
 	}
 }
 
-resource "aws_subnet" "subnet_az2" {
-	count = 2
-	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "10.2.${count.index + 2}.0/24"
-    availability_zone = "${var.availability_zone_2}"
-
-	tags {
-	  Name = "${format("subnet_az2", count.index + 1)}"
-	}
-}
 
 
