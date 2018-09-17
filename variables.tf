@@ -3,4 +3,6 @@ variable "aws_profile" {}
 
 variable "vpc_cidrblock" {}
 
-variable "availability_zone" {}
+variable "availability_zone" {
+	type = "map"
+}
