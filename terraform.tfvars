@@ -1,7 +1,7 @@
 aws_profile = "default"
 aws_region = "eu-west-1"
 
-vpc_cidrblock = "10.0.0.0/16"
+vpc_cidrblock = "10.2.0.0/16"
 
 availability_zone_1 = "eu-west-1a"
 availability_zone_2 = "eu-west-1b"
