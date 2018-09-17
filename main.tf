@@ -12,6 +12,24 @@ resource "aws_vpc" "mainVPC" {
 	}
 }
 
+resource "aws_internet_gateway" "my_internet_gateway" {
+	vpc_id = "${aws_vpc.mainVPC.id}"
+}
+
+resource "aws_eip" "nat_elastic_ip" {
+	count = 1
+}
+
+resource "aws_nat_gateway" "my_nat_gateway0" {
+	allocation_id = "${aws_eip.nat_elastic_ip.0.id}"
+	subnet_id = "${aws_subnet.subnet.0.id}"
+}
+
+resource "aws_nat_gateway" "my_nat_gateway1" {
+	allocation_id = "${aws_eip.nat_elastic_ip.1.id}"
+	subnet_id = "${aws_subnet.subnet.1.id}"
+}
+
 ### Set up subnets
 
 resource "aws_subnet" "subnet" {
