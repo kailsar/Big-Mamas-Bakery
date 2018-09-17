@@ -25,20 +25,14 @@ resource "aws_nat_gateway" "my_nat_gateway0" {
 	subnet_id = "${aws_subnet.subnet.0.id}"
 }
 
-resource "aws_nat_gateway" "my_nat_gateway1" {
-	allocation_id = "${aws_eip.nat_elastic_ip.1.id}"
-	subnet_id = "${aws_subnet.subnet.1.id}"
-
-}
-
 
 ### Set up subnets
 
 resource "aws_subnet" "subnet" {
 	count = 4
 	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "10.2.${count.index}.0/24"
-    availability_zone = "${lookup(var.availability_zone, count.index % 2)}"
+	cidr_block        = "${cidrsubnet ("${aws_vpc.mainVPC.cidr_block}", 8, count.index)}"
+    availability_zone     = "${lookup(var.availability_zone, count.index % 2)}"
 
 	tags {
 	  Name = "${format("subnet-%s-%d", "${lookup(var.availability_zone, count.index % 2)}", count.index + 1)}"
