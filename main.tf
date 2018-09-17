@@ -25,10 +25,6 @@ resource "aws_nat_gateway" "my_nat_gateway0" {
 	subnet_id = "${aws_subnet.subnet.0.id}"
 }
 
-resource "aws_nat_gateway" "my_nat_gateway1" {
-	allocation_id = "${aws_eip.nat_elastic_ip.1.id}"
-	subnet_id = "${aws_subnet.subnet.1.id}"
-}
 
 ### Set up subnets
 
