@@ -21,7 +21,7 @@ resource "aws_subnet" "subnet" {
     availability_zone = "${lookup(var.availability_zone, count.index % 2)}"
 
 	tags {
-	  Name = "${format("subnet-", count.index + 1)}"
+	  Name = "${format("subnet-%s-%d", "${lookup(var.availability_zone, count.index % 2)}", count.index)}"
 	}
 }
 
