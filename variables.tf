@@ -6,3 +6,8 @@ variable "vpc_cidrblock" {}
 variable "availability_zone" {
 	type = "map"
 }
+
+variable "bastion_ami" {}
+
+variable "bastion_instance_type" {}
+

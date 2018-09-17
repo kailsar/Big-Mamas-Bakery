@@ -21,7 +21,18 @@ resource "aws_subnet" "subnet" {
     availability_zone = "${lookup(var.availability_zone, count.index % 2)}"
 
 	tags {
-	  Name = "${format("subnet-%s-%d", "${lookup(var.availability_zone, count.index % 2)}", count.index)}"
+	  Name = "${format("subnet-%s-%d", "${lookup(var.availability_zone, count.index % 2)}", count.index + 1)}"
+	}
+}
+
+### Set up Bastion host
+
+resource "aws_instance" "bastion" {
+	subnet_id     = "${aws_subnet.subnet.0.id}"
+	ami           = "${var.bastion_ami}"
+	instance_type = "${var.bastion_instance_type}"
+	tags {
+		Name = "Bastion Host"
 	}
 }
 
