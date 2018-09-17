@@ -17,7 +17,7 @@ resource "aws_internet_gateway" "my_internet_gateway" {
 }
 
 resource "aws_eip" "nat_elastic_ip" {
-	count = 1
+	count = 2
 }
 
 resource "aws_nat_gateway" "my_nat_gateway0" {
