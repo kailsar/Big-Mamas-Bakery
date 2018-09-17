@@ -25,6 +25,12 @@ resource "aws_nat_gateway" "my_nat_gateway0" {
 	subnet_id = "${aws_subnet.subnet.0.id}"
 }
 
+resource "aws_nat_gateway" "my_nat_gateway1" {
+	allocation_id = "${aws_eip.nat_elastic_ip.1.id}"
+	subnet_id = "${aws_subnet.subnet.1.id}"
+
+}
+
 
 ### Set up subnets
 
@@ -59,7 +65,7 @@ resource "aws_security_group" "bastion_security_group" {
 	vpc_id = "${aws_vpc.mainVPC.id}"
 
 	ingress {
-		from_port = 0
+		from_port = 22
 		to_port = 22
 		protocol = "TCP"
 		cidr_blocks = ["185.73.154.30/32"]
