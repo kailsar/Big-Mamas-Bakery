@@ -14,43 +14,26 @@ resource "aws_vpc" "mainVPC" {
 
 ### Set up subnets
 
-resource "aws_subnet" "subnet_az1_public" {
+resource "aws_subnet" "subnet_az1" {
+	count = 2
 	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "${var.subnet_az1_public_cidrblock}"
+	cidr_block        = "10.2.${count.index}.0/24"
     availability_zone = "${var.availability_zone_1}"
 
 	tags {
-	  Name = "subnet_az1_public"
+	  Name = "${format("subnet_az1", count.index + 1)}"
 	}
 }
 
-resource "aws_subnet" "subnet_az1_private" {
+resource "aws_subnet" "subnet_az2" {
+	count = 2
 	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "${var.subnet_az1_private_cidrblock}"
-    availability_zone = "${var.availability_zone_1}"
-
-	tags {
-	  Name = "subnet_az1_private"
-	}
-}
-
-resource "aws_subnet" "subnet_az2_public" {
-	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "${var.subnet_az2_public_cidrblock}"
-    availability_zone = "${var.availability_zone_2}"
-	
-	tags {
-	  Name = "subnet_az2_public"
-	}
-}
-
-resource "aws_subnet" "subnet_az2_private" {
-	vpc_id            = "${aws_vpc.mainVPC.id}"
-	cidr_block        = "${var.subnet_az2_private_cidrblock}"
+	cidr_block        = "10.2.${count.index + 2}.0/24"
     availability_zone = "${var.availability_zone_2}"
 
 	tags {
-	  Name = "subnet_az2_private"
+	  Name = "${format("subnet_az2", count.index + 1)}"
 	}
 }
+
 
