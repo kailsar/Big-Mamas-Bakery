@@ -3,6 +3,8 @@ variable "aws_profile" {}
 
 variable "vpc_cidrblock" {}
 
+variable "CIDR_divider" {}
+
 variable "availability_zone" {
   type = "map"
 }

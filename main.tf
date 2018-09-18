@@ -32,9 +32,10 @@ resource "aws_nat_gateway" "my_nat_gateway" {
 resource "aws_subnet" "subnet" {
   count             = "${length(var.availability_zone) * 2}"
   vpc_id            = "${aws_vpc.mainVPC.id}"
-  cidr_block        = "${cidrsubnet ("${aws_vpc.mainVPC.cidr_block}", 8, count.index)}"
+  cidr_block        = "${cidrsubnet ("${aws_vpc.mainVPC.cidr_block}", "${var.CIDR_divider}", count.index)}"
+# Gives a unique CIDR for each subnet, a CIDR_divider of 8 will split a /16 in to /24s
   availability_zone = "${lookup(var.availability_zone, count.index % "${length(var.availability_zone)}")}"
-
+# Modulus the count against total number of AZs to get two subnets in each AZ
   tags {
     Name = "${format("subnet-%s-%d", "${lookup(var.availability_zone, count.index % 2)}", count.index + 1)}"
   }
@@ -76,10 +77,12 @@ resource "aws_security_group" "bastion_security_group" {
   }
 }
 
+### Create web servers
 
 resource "aws_instance" "web_server" {
   count         = "${length(var.availability_zone)}"
-  subnet_id     = "${aws_subnet.subnet.*.id["${length(var.availability_zone) + count.index}"]}"
+  subnet_id     = "${aws_subnet.subnet.*.id["${length(var.availability_zone) + count.index}"]}" 
+# Private subnets are after public, so to get one in each private subnet, total AZ + count works
   ami           = "${var.webserver_ami}"
   instance_type = "${var.webserver_instance_type}"
   key_name      = "Mama's Bakery"
@@ -88,6 +91,8 @@ resource "aws_instance" "web_server" {
     Name = "Web Server"
   }
 }
+
+### Create application servers
 
 resource "aws_instance" "app_server" {
   count         = "${length(var.availability_zone)}"
