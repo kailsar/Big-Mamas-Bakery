@@ -10,3 +10,11 @@ variable "availability_zone" {
 variable "bastion_ami" {}
 
 variable "bastion_instance_type" {}
+
+variable "webserver_ami" {}
+
+variable "webserver_instance_type" {}
+
+variable "appserver_ami" {}
+
+variable "appserver_instance_type" {}

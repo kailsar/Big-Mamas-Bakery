@@ -21,11 +21,11 @@ resource "aws_eip" "nat_elastic_ip" {
   count = "${length(var.availability_zone)}"
 }
 
-resource "aws_nat_gateway" "my_nat_gateway0" {
-  allocation_id = "${aws_eip.nat_elastic_ip.0.id}"
-  subnet_id     = "${aws_subnet.subnet.0.id}"
+resource "aws_nat_gateway" "my_nat_gateway" {
+  count         = "${length(var.availability_zone)}"
+  allocation_id = "${aws_eip.nat_elastic_ip.*.id[count.index]}"
+  subnet_id     = "${aws_subnet.subnet.*.id[count.index]}"
 }
-
 
 ### Set up subnets
 
@@ -73,5 +73,28 @@ resource "aws_security_group" "bastion_security_group" {
     to_port     = 0
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+resource "aws_instance" "web_server" {
+  subnet_id     = "${aws_subnet.subnet.0.id}"
+  ami           = "${var.webserver_ami}"
+  instance_type = "${var.webserver_instance_type}"
+  key_name      = "Mama's Bakery"
+
+  tags {
+    Name = "Web Server"
+  }
+}
+
+resource "aws_instance" "app_server" {
+  subnet_id     = "${aws_subnet.subnet.0.id}"
+  ami           = "${var.appserver_ami}"
+  instance_type = "${var.appserver_instance_type}"
+  key_name      = "Mama's Bakery"
+
+  tags {
+    Name = "Application Server"
   }
 }
