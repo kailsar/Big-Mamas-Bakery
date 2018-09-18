@@ -78,7 +78,8 @@ resource "aws_security_group" "bastion_security_group" {
 
 
 resource "aws_instance" "web_server" {
-  subnet_id     = "${aws_subnet.subnet.0.id}"
+  count         = "${length(var.availability_zone)}"
+  subnet_id     = "${aws_subnet.subnet.*.id["${length(var.availability_zone) + count.index}"]}"
   ami           = "${var.webserver_ami}"
   instance_type = "${var.webserver_instance_type}"
   key_name      = "Mama's Bakery"
@@ -89,7 +90,8 @@ resource "aws_instance" "web_server" {
 }
 
 resource "aws_instance" "app_server" {
-  subnet_id     = "${aws_subnet.subnet.0.id}"
+  count         = "${length(var.availability_zone)}"
+  subnet_id     = "${aws_subnet.subnet.*.id["${length(var.availability_zone) + count.index}"]}"
   ami           = "${var.appserver_ami}"
   instance_type = "${var.appserver_instance_type}"
   key_name      = "Mama's Bakery"
@@ -98,3 +100,4 @@ resource "aws_instance" "app_server" {
     Name = "Application Server"
   }
 }
+
