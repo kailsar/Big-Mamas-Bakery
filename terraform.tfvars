@@ -20,3 +20,5 @@ webserver_instance_type = "t2.micro"
 appserver_ami = "ami-047bb4163c506cd98"
 
 appserver_instance_type = "t2.micro"
+
+subnet_group_name = "elasticache_subnet_group"

@@ -20,3 +20,5 @@ variable "webserver_instance_type" {}
 variable "appserver_ami" {}
 
 variable "appserver_instance_type" {}
+
+variable "subnet_group_name" {}
