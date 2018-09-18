@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "my_internet_gateway" {
 resource "aws_nat_gateway" "my_nat_gateway" {
   count         = "${length(var.availability_zone)}"
   allocation_id = "${aws_eip.nat_elastic_ip.*.id[count.index]}"
-  subnet_id     = "${aws_subnet.subnet.*.id[count.index]}"
+  subnet_id     = "${aws_subnet.public_subnet.*.id[count.index]}"
 }
 
 ### Set up subnets

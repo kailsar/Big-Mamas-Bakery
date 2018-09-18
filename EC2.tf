@@ -2,7 +2,7 @@
 ### Set up Bastion host
 
 resource "aws_instance" "bastion" {
-  subnet_id     = "${aws_subnet.subnet.0.id}"
+  subnet_id     = "${aws_subnet.public_subnet.0.id}"
   ami           = "${var.bastion_ami}"
   instance_type = "${var.bastion_instance_type}"
   key_name      = "Mama's Bakery"
