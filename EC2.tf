@@ -16,8 +16,7 @@ resource "aws_instance" "bastion" {
 
 resource "aws_instance" "web_server" {
   count         = "${length(var.availability_zone)}"
-  subnet_id     = "${aws_subnet.private_subnet.*.id}"
-# Private subnets are after public, so to get one in each private subnet, total AZ + count.index
+  subnet_id     = "${aws_subnet.private_subnet.*.id[count.index]}"
   ami           = "${var.webserver_ami}"
   instance_type = "${var.webserver_instance_type}"
   key_name      = "Mama's Bakery"
@@ -31,7 +30,7 @@ resource "aws_instance" "web_server" {
 
 resource "aws_instance" "app_server" {
   count         = "${length(var.availability_zone)}"
-  subnet_id     = "${aws_subnet.private_subnet.*.id}"
+  subnet_id     = "${aws_subnet.private_subnet.*.id[count.index]}"
   ami           = "${var.appserver_ami}"
   instance_type = "${var.appserver_instance_type}"
   key_name      = "Mama's Bakery"

@@ -21,6 +21,6 @@ resource "aws_elasticache_replication_group" "default" {
  
   cluster_mode {
     replicas_per_node_group = 1
-    num_node_groups         = 5
+    num_node_groups         = 1
   }
 }
