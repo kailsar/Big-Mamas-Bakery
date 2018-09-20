@@ -23,7 +23,7 @@ resource "aws_launch_template" "webserver_template" {
 }
 
 resource "aws_autoscaling_group" "webserver_asg" {
-  availability_zones = "${var.availability_zone}"
+  availability_zones = "${var.zones}"
   desired_capacity = "${length(var.availability_zone)}"
   max_size = "${length(var.availability_zone)}"
   min_size = "${length(var.availability_zone)}"
@@ -49,7 +49,7 @@ resource "aws_launch_template" "appserver_template" {
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
-  availability_zones = "${var.availability_zone}"
+  availability_zones = "${var.zones}"
   desired_capacity = "${length(var.availability_zone)}"
   max_size = "${length(var.availability_zone)}"
   min_size = "${length(var.availability_zone)}"
