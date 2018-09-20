@@ -29,11 +29,8 @@ resource "aws_nat_gateway" "my_nat_gateway" {
 
 ### Set up subnets
 
-resource "aws_subnet" "public_subnet" {
+resource "aws_default_subnet" "public_subnet" {
   count             = "${length(var.availability_zone)}"
-  vpc_id            = "${aws_vpc.mainVPC.id}"
-  cidr_block        = "${cidrsubnet ("${aws_vpc.mainVPC.cidr_block}", "${var.CIDR_divider}", count.index)}"
-# Gives a unique CIDR for each subnet, a CIDR_divider of 8 will split a /16 in to /24s
   availability_zone = "${lookup(var.availability_zone, count.index)}"
   tags {
     Name = "${format("public_subnet-%s", "${lookup(var.availability_zone, count.index)}")}"
