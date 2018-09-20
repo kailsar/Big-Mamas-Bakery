@@ -21,3 +21,11 @@ resource "aws_security_group" "bastion_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+resource "aws_rds_cluster" "RDS Cluster" {
+  cluster_identifier      = "bakery-aurora-cluster"
+  engine                  = "aurora-mysql"
+  availability_zones      = ["${aws_subnet.private_subnet.*.id}"]
+  database_name           = "mamasbakery"
+  master_username         = "admin"
+  master_password         = "b5GxJhWJuQkjcX2"
+}
