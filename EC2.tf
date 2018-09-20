@@ -14,29 +14,54 @@ resource "aws_instance" "bastion" {
 
 ### Create web servers
 
-resource "aws_instance" "web_server" {
-  count         = "${length(var.availability_zone)}"
-  subnet_id     = "${aws_subnet.private_subnet.*.id[count.index]}"
-  ami           = "${var.webserver_ami}"
-  instance_type = "${var.webserver_instance_type}"
-  key_name      = "Mama's Bakery"
 
-  tags {
-    Name = "Web Server"
-  }
+
+resource "aws_launch_template" "webserver_template" {
+  name_prefix = "web"
+  image_id = "${var.webserver_ami}"
+  instance_type = "${var.webserver_instance_type}"
 }
+
+resource "aws_autoscaling_group" "webserver_asg" {
+  availability_zones = "${aws_subnet.private_subnet.*.id}"
+  desired_capacity = "${length(var.availability_zone)}"
+  max_size = "${length(var.availability_zone)}"
+  min_size = "${length(var.availability_zone)}"
+  launch_template = {
+    id = "${aws_launch_template.webserver_template.id}"
+    version = "$$Latest"
+  }
+  tags = [
+    {
+      key                 = "name"
+      value               = "Web Server"
+      propagate_at_launch = true
+    } ]
+}
+
 
 ### Create application servers
 
-resource "aws_instance" "app_server" {
-  count         = "${length(var.availability_zone)}"
-  subnet_id     = "${aws_subnet.private_subnet.*.id[count.index]}"
-  ami           = "${var.appserver_ami}"
+resource "aws_launch_template" "appserver_template" {
+  name_prefix = "web"
+  image_id = "${var.appserver_ami}"
   instance_type = "${var.appserver_instance_type}"
-  key_name      = "Mama's Bakery"
+}
 
-  tags {
-    Name = "Application Server"
+resource "aws_autoscaling_group" "appserver_asg" {
+  availability_zones = "${aws_subnet.private_subnet.*.id}"
+  desired_capacity = "${length(var.availability_zone)}"
+  max_size = "${length(var.availability_zone)}"
+  min_size = "${length(var.availability_zone)}"
+  launch_template = {
+    id = "${aws_launch_template.appserver_template.id}"
+    version = "$$Latest"
   }
+  tags = [
+    {
+      key                 = "name"
+      value               = "App Server"
+      propagate_at_launch = true
+    } ]
 }
 
