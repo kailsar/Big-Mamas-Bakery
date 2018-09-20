@@ -32,5 +32,5 @@ resource "aws_db_instance" "rds_instance" {
   username             = "admin"
   password             = "9aDrG}GK$>[#E4A"
   parameter_group_name = "default.mysql5.7"
-  storage_encrypted    = true
+  skip_final_snapshot  = true
 }

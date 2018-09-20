@@ -2,7 +2,6 @@
 
 resource "aws_vpc" "mainVPC" {
   cidr_block = "${var.vpc_cidrblock}"
-
   tags {
     Name = "Mama's Bakery VPC"
   }
