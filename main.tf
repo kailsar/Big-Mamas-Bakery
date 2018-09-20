@@ -30,6 +30,7 @@ resource "aws_db_instance" "rds_instance" {
   multi_az             = true
   name                 = "mamas_rds"
   username             = "admin"
-  password             = "9a\DrG}GK$>[#E4A"
+  password             = "9aDrG}GK$>[#E4A"
   parameter_group_name = "default.mysql5.7"
   storage_encrypted    = true
+}
