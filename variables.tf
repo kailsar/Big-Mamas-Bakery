@@ -9,6 +9,10 @@ variable "availability_zone" {
   type = "map"
 }
 
+variable "zones" {
+  type = "list"
+}
+
 variable "bastion_ami" {}
 
 variable "bastion_instance_type" {}
