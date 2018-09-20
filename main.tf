@@ -21,15 +21,9 @@ resource "aws_security_group" "bastion_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_rds_cluster_instance" "cluster_instances" {
-  count              = 2
-  identifier         = "aurora-cluster-${count.index}"
-  cluster_identifier = "${aws_rds_cluster.rds_cluster.id}"
-  instance_class     = "db.t2.small"
-}
-
-resource "aws_rds_cluster" "rds_cluster" {
-  cluster_identifier      = "aurora-cluster"
+resource "aws_rds_cluster" "RDS Cluster" {
+  cluster_identifier      = "bakery-aurora-cluster"
+  engine                  = "aurora-mysql"
   availability_zones      = ["${aws_subnet.private_subnet.*.id}"]
   database_name           = "mamasbakery"
   master_username         = "admin"
