@@ -20,8 +20,12 @@ resource "aws_launch_template" "webserver_template" {
   name_prefix            = "web"
   image_id               = "${var.webserver_ami}"
   instance_type          = "${var.webserver_instance_type}"
-  vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
   key_name               = "Mama's Bakery"
+  network_interfaces     = {
+        security_groups             = ["${aws_security_group.private_security_group.id}"]
+        associate_public_ip_address = false
+        device_index                = "0"
+}
 }
 
 resource "aws_autoscaling_group" "webserver_asg" {
@@ -48,8 +52,12 @@ resource "aws_launch_template" "appserver_template" {
   name_prefix            = "web"
   image_id               = "${var.appserver_ami}"
   instance_type          = "${var.appserver_instance_type}"
-  vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
-  key_name      = "Mama's Bakery"
+  key_name               = "Mama's Bakery"
+  network_interfaces	 = {
+	security_groups	            = ["${aws_security_group.private_security_group.id}"]
+	associate_public_ip_address = false
+	device_index                = "0"
+	}
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
