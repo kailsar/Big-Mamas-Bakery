@@ -17,18 +17,20 @@ resource "aws_instance" "bastion" {
 
 
 resource "aws_launch_template" "webserver_template" {
-  name_prefix = "web"
-  image_id = "${var.webserver_ami}"
-  instance_type = "${var.webserver_instance_type}"
+  name_prefix            = "web"
+  image_id               = "${var.webserver_ami}"
+  instance_type          = "${var.webserver_instance_type}"
+  vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
+  key_name               = "Mama's Bakery"
 }
 
 resource "aws_autoscaling_group" "webserver_asg" {
   availability_zones = "${var.zones}"
-  desired_capacity = "${length(var.availability_zone)}"
-  max_size = "${length(var.availability_zone)}"
-  min_size = "${length(var.availability_zone)}"
-  launch_template = {
-    id = "${aws_launch_template.webserver_template.id}"
+  desired_capacity   = "${length(var.availability_zone)}"
+  max_size           = "${length(var.availability_zone)}"
+  min_size           = "${length(var.availability_zone)}"
+  launch_template    = {
+    id      = "${aws_launch_template.webserver_template.id}"
     version = "$$Latest"
   }
   tags = [
@@ -47,6 +49,7 @@ resource "aws_launch_template" "appserver_template" {
   image_id               = "${var.appserver_ami}"
   instance_type          = "${var.appserver_instance_type}"
   vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
+  key_name      = "Mama's Bakery"
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
