@@ -22,3 +22,22 @@ resource "aws_security_group" "bastion_security_group" {
   }
 }
 
+resource "aws_security_group" "private_security_group" {
+  name   = "Private Subnet Security Group"
+  vpc_id = "${aws_vpc.mainVPC.id}"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "TCP"
+    cidr_blocks = ["10.2.0.0/20"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
