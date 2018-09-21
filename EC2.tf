@@ -29,11 +29,12 @@ resource "aws_launch_template" "webserver_template" {
 }
 
 resource "aws_autoscaling_group" "webserver_asg" {
-  availability_zones = "${var.zones}"
-  desired_capacity   = "${length(var.availability_zone)}"
-  max_size           = "${length(var.availability_zone)}"
-  min_size           = "${length(var.availability_zone)}"
-  launch_template    = {
+  availability_zones  = "${var.zones}"
+  desired_capacity    = "${length(var.availability_zone)}"
+  max_size            = "${length(var.availability_zone)}"
+  min_size            = "${length(var.availability_zone)}"
+  vpc_zone_identifier = ["${aws_subnet.private_subnet.*.id}"]
+  launch_template     = {
     id      = "${aws_launch_template.webserver_template.id}"
     version = "$$Latest"
   }
@@ -61,11 +62,12 @@ resource "aws_launch_template" "appserver_template" {
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
-  availability_zones = "${var.zones}"
-  desired_capacity   = "${length(var.availability_zone)}"
-  max_size           = "${length(var.availability_zone)}"
-  min_size           = "${length(var.availability_zone)}"
-  launch_template    = {
+  availability_zones  = "${var.zones}"
+  desired_capacity    = "${length(var.availability_zone)}"
+  max_size            = "${length(var.availability_zone)}"
+  min_size            = "${length(var.availability_zone)}"
+  vpc_zone_identifier = ["${aws_subnet.private_subnet.*.id}"]
+  launch_template     = {
     id      = "${aws_launch_template.appserver_template.id}"
     version = "$$Latest"
   }
