@@ -9,9 +9,6 @@ resource "aws_vpc" "mainVPC" {
 
 ### Elastic IPs and Gateways
 
-resource "aws_eip" "bastion_ip" {
-  instance = "${aws_instance.bastion.id}"
-}
 resource "aws_eip" "nat_elastic_ip" {
   count = "${length(var.availability_zone)}"
 }
