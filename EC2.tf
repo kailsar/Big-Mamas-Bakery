@@ -1,4 +1,31 @@
 
+data "aws_ami" "node_web_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["webserver*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+data "aws_ami" "node_app_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["appserver*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
 ### Set up Bastion host
 
 resource "aws_instance" "bastion" {
@@ -18,7 +45,7 @@ resource "aws_instance" "bastion" {
 
 resource "aws_launch_template" "webserver_template" {
   name_prefix            = "web"
-  image_id               = "${var.webserver_ami}"
+  image_id               = "${data.aws_ami.node_web_ami.id}"
   instance_type          = "${var.webserver_instance_type}"
   key_name               = "Mama's Bakery"
   vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
@@ -46,7 +73,7 @@ resource "aws_autoscaling_group" "webserver_asg" {
 
 resource "aws_launch_template" "appserver_template" {
   name_prefix            = "web"
-  image_id               = "${var.appserver_ami}"
+  image_id               = "${data.aws_ami.node_app_ami.id}"
   instance_type          = "${var.appserver_instance_type}"
   key_name               = "Mama's Bakery"
   vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
