@@ -29,10 +29,11 @@ data "aws_ami" "node_app_ami" {
 ### Set up Bastion host
 
 resource "aws_instance" "bastion" {
-  subnet_id     = "${aws_subnet.public_subnet.0.id}"
-  ami           = "${var.bastion_ami}"
-  instance_type = "${var.bastion_instance_type}"
-  key_name      = "Mama's Bakery"
+  subnet_id                   = "${aws_subnet.public_subnet.0.id}"
+  ami                         = "${var.bastion_ami}"
+  instance_type               = "${var.bastion_instance_type}"
+  key_name                    = "Mama's Bakery"
+  associate_public_ip_address = true
 
   tags {
     Name = "Bastion Host"
