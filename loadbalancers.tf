@@ -1,5 +1,5 @@
 resource "aws_lb" "application-lb" {
-  name               = "mamas-alb"
+  name               = "${var.deploy_type}-alb"
   internal           = true
   load_balancer_type = "application"
   subnets            = ["${aws_subnet.private_subnet.*.id}"]
@@ -10,7 +10,7 @@ resource "aws_lb" "application-lb" {
 
 
 resource "aws_lb" "network-lb" {
-  name               = "mamas-nlb"
+  name               = "${var.deploy_type}-nlb"
   internal           = true
   load_balancer_type = "network"
   subnets            = ["${aws_subnet.private_subnet.*.id}"]
