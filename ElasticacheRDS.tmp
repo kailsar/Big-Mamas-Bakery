@@ -25,9 +25,19 @@ resource "aws_elasticache_replication_group" "default" {
   }
 }
 
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name       = "DB Subnet Group"
+  subnet_ids = ["${aws_subnet.private_subnet.*.id}]
+
+  tags {
+    Name = "My DB subnet group"
+  }
+}
+
 resource "aws_db_instance" "rds_instance" {
   allocated_storage    = 10
   storage_type         = "gp2"
+  db_subnet_group_name = "${aws_db_subnet_group.db_subnet_group.id}"
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
