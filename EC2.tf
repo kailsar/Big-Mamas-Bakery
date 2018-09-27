@@ -34,7 +34,7 @@ resource "aws_instance" "bastion" {
   instance_type               = "${var.bastion_instance_type}"
   key_name                    = "Mama's Bakery"
   associate_public_ip_address = true
-  vpc_security_group_ids .    = "${aws_security_group.bastion_security_group.id}"
+  vpc_security_group_ids .    = ["${aws_security_group.bastion_security_group.id}"]
 
   tags {
     Name = "Bastion Host"
