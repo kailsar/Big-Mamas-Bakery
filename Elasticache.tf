@@ -5,7 +5,7 @@ resource "aws_elasticache_subnet_group" "ec_subnet_group" {
 }
 
 resource "aws_elasticache_replication_group" "default" {
-  replication_group_id          = "MamasRedis"
+  replication_group_id          = "${var.deploy_type}_MamasRedis"
   replication_group_description = "Redis cluster"
  
   node_type            = "cache.t2.micro"
