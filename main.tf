@@ -11,7 +11,7 @@ resource "aws_security_group" "bastion_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "TCP"
-    cidr_blocks = ["185.73.154.30/32"]
+    cidr_blocks = ["185.73.154.30/32","88.97.27.7/32"]
   }
 
   egress {
@@ -27,10 +27,17 @@ resource "aws_security_group" "private_security_group" {
   vpc_id = "${aws_vpc.mainVPC.id}"
 
   ingress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 22
+    to_port     = 22
     protocol    = "TCP"
-    cidr_blocks = ["10.2.0.0/20"]
+    cidr_blocks = ["10.2.0.0/16"]
+  }
+  
+    ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "TCP"
+    cidr_blocks = ["10.2.0.0/16"]
   }
 
   egress {
