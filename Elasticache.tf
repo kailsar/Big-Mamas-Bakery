@@ -1,7 +1,7 @@
 
-resource "aws_elasticache_subnet_group" "EC_subnet_group" {
+resource "aws_elasticache_subnet_group" "ec_subnet_group" {
     subnet_ids = ["${aws_subnet.private_subnet.*.id}"]
-    name = "${var.deploy_type}_ec_subnet_group"
+    name = "${var.deploy_type}-ec-subnet-group"
 }
 
 resource "aws_elasticache_replication_group" "default" {
@@ -15,7 +15,7 @@ resource "aws_elasticache_replication_group" "default" {
   snapshot_retention_limit = 5
   snapshot_window          = "00:00-05:00"
  
-  subnet_group_name = "${aws_elasticache_subnet_group.EC_subnet_group.name}"
+  subnet_group_name = "${aws_elasticache_subnet_group.ec_subnet_group.name}"
  
   automatic_failover_enabled = true
  
