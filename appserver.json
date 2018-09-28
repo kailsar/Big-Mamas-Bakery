@@ -18,7 +18,9 @@
     "inline": [
       "sleep 30",
       "sudo yum update -y"
-      "sudo yum install git"
+      "sudo pip install boto3"
+      "sudo pip install mysql_connector"
+      "sudo pip install awscli"
     ]
   }]
 
