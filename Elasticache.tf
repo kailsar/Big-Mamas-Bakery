@@ -1,7 +1,7 @@
 
 resource "aws_elasticache_subnet_group" "EC_subnet_group" {
     subnet_ids = ["${aws_subnet.private_subnet.*.id}"]
-    name = "${var.subnet_group_name}"
+    name = "${var.deploy_type}_ec_subnet_group"
 }
 
 resource "aws_elasticache_replication_group" "default" {
@@ -26,7 +26,7 @@ resource "aws_elasticache_replication_group" "default" {
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "db_subnet_group"
+  name       = "${var.deploy_type}_db_subnet_group"
   subnet_ids = ["${aws_subnet.private_subnet.*.id}"]
 
   tags {
@@ -42,7 +42,7 @@ resource "aws_db_instance" "rds_instance" {
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
   multi_az               = true
-  name                   = "mamas_rds"
+  name                   = "${var.deploy_type}_mamas_rds"
   username               = "admin"
   password               = "9aDrG}GK$>[#E4A"
   parameter_group_name   = "default.mysql5.7"
