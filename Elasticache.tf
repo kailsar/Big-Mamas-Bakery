@@ -26,8 +26,8 @@ resource "aws_elasticache_replication_group" "default" {
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "DB Subnet Group"
-  subnet_ids = ["${aws_subnet.private_subnet.*.id}]
+  name       = "db_subnet_group"
+  subnet_ids = ["${aws_subnet.private_subnet.*.id}"]
 
   tags {
     Name = "My DB subnet group"
