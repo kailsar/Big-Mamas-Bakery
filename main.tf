@@ -7,6 +7,11 @@ data "aws_iam_role" "rds_iam_role" {
   name = "RDSFull"
 }
 
+resource "aws_iam_instance_profile" "rds_iam_profile" {
+  name = "rds_profile"
+  role = "${aws_iam_role.rds_iam_role.name}"
+}
+
 resource "aws_security_group" "bastion_security_group" {
   name   = "Bastion Security Group"
   vpc_id = "${aws_vpc.mainVPC.id}"
