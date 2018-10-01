@@ -79,7 +79,7 @@ resource "aws_launch_template" "appserver_template" {
   instance_type          = "${var.appserver_instance_type}"
   key_name               = "Mama's Bakery"
   vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
-
+  iam_instance_profile   = "${aws_iam_instance_profile.rds_iam_profile.id}"
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
