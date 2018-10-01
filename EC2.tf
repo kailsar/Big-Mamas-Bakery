@@ -37,7 +37,7 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids      = ["${aws_security_group.bastion_security_group.id}"]
 
   tags {
-    Name = "Bastion Host"
+    Name = "${var.deploy_type} - Bastion Host"
   }
 }
 
@@ -65,7 +65,7 @@ resource "aws_autoscaling_group" "webserver_asg" {
   tags = [
     {
       key                 = "name"
-      value               = "Web Server"
+      value               = "${var.deploy_type} - Web Server"
       propagate_at_launch = true
     } ]
 }
@@ -94,7 +94,7 @@ resource "aws_autoscaling_group" "appserver_asg" {
   tags = [
     {
       key                 = "name"
-      value               = "App Server"
+      value               = "${var.deploy_type} - App Server"
       propagate_at_launch = true
     } ]
 }
