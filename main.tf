@@ -3,6 +3,10 @@ provider "aws" {
   profile = "${var.aws_profile}"
 }
 
+data "aws_iam_role" "rds_iam_role" {
+  name = "RDSFull"
+}
+
 resource "aws_security_group" "bastion_security_group" {
   name   = "Bastion Security Group"
   vpc_id = "${aws_vpc.mainVPC.id}"
@@ -11,7 +15,7 @@ resource "aws_security_group" "bastion_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "TCP"
-    cidr_blocks = ["185.73.154.30/32","88.97.27.7/32"]
+    cidr_blocks = ["185.73.154.30/32","88.97.27.7/32","35.178.219.243/32"]
   }
 
   egress {
