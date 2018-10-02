@@ -8,7 +8,7 @@ data "aws_iam_role" "rds_iam_role" {
 }
 
 resource "aws_iam_instance_profile" "rds_iam_profile" {
-  name = "rds_profile"
+  name = "${var.deploy_type}_rds_profile"
   role = "${data.aws_iam_role.rds_iam_role.name}"
 }
 
