@@ -9,7 +9,7 @@ data "aws_iam_role" "rds_iam_role" {
 
 resource "aws_iam_instance_profile" "rds_iam_profile" {
   name = "rds_profile"
-  role = "${aws_iam_role.rds_iam_role.name}"
+  role = "${data.aws_iam_role.rds_iam_role.name}"
 }
 
 resource "aws_security_group" "bastion_security_group" {
