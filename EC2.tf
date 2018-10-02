@@ -80,7 +80,7 @@ resource "aws_launch_template" "appserver_template" {
   key_name               = "Mama's Bakery"
   vpc_security_group_ids = ["${aws_security_group.private_security_group.id}"]
   iam_instance_profile {
-    name = "rds_profile"
+    name = "${var.deploy_type}_rds_profile"
     }
 }
 
