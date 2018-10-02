@@ -2,6 +2,7 @@
 
 resource "aws_vpc" "mainVPC" {
   cidr_block = "${var.vpc_cidrblock}"
+  enable_dns_hostnames = true
   tags {
     Name = "Mama's Bakery VPC"
   }
