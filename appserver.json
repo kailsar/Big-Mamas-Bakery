@@ -23,8 +23,7 @@
   "provisioners": [
     {
       "type": "ansible",
-      "playbook_file": "/home/jenkins/app.yml",
-      "extra_arguments": [ "-vvvv" ]
+      "playbook_file": "/home/jenkins/app.yml"
     }
   ]
 

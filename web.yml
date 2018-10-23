@@ -3,6 +3,7 @@
     - name: start nginx
       service:
         name: nginx
+        enabled: yes
         state: started
     - name: copy html
       copy:
