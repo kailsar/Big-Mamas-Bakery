@@ -1,0 +1,11 @@
+- hosts: all
+  tasks:
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+    - name: copy html
+      copy:
+        src: /home/jenkins/index.html
+        dest: /usr/share/nginx/html/index.html
+        mode: 0444
