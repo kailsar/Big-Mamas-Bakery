@@ -18,10 +18,14 @@
     "inline": [
       "sleep 30",
       "sudo yum update -y"
-      "sudo pip install boto3"
-      "sudo pip install mysql_connector"
-      "sudo pip install awscli"
     ]
-  }]
+  }],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "/home/jenkins/app.yml",
+      "extra_arguments": [ "-vvvv" ]
+    }
+  ]
 
 }
