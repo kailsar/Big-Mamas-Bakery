@@ -15,5 +15,10 @@
   - name: Copy startup script
     copy:
       src: /home/jenkins/startup.sh
-      dest: /etc/init.d/startup.sh
+      dest: /usr/local/bin/startup.sh
       mode: 0555
+  - name: Adds crontab to run above script on boot
+    cron:
+      name: "Startup Script"
+      special_time: reboot
+      job: "/usr/local/bin/startup.sh"
