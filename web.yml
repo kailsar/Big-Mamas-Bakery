@@ -1,7 +1,7 @@
 - hosts: all
   tasks:
     - name: start nginx
-      shell: nginx
+      shell: /usr/sbin/nginx
     - name: copy html
       copy:
         src: /home/jenkins/index.html
