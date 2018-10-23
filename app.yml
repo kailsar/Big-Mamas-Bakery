@@ -1,0 +1,19 @@
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: Install boto3
+    pip:
+      name: boto3
+  - name: Install mysql connector
+    pip:
+      name: mysql_connector
+  - name: Download Python code
+    get_url:
+      url: https://raw.githubusercontent.com/kailsar/Little-Mamas-App/master/LittleMamasApp.py
+      dest: /usr/local/bin/LittleMamasApp.py
+  - name: Copy startup script
+    copy:
+      src: /home/jenkins/startup.sh
+      dest: /etc/init.d/startup.sh
+      mode: 0555
