@@ -46,6 +46,8 @@ resource "aws_instance" "bastion" {
 
 
 resource "aws_launch_template" "webserver_template" {
+  lifecycle { create_before_destroy = true }
+  
   name_prefix            = "web"
   image_id               = "${data.aws_ami.node_web_ami.id}"
   instance_type          = "${var.webserver_instance_type}"
@@ -54,6 +56,9 @@ resource "aws_launch_template" "webserver_template" {
 }
 
 resource "aws_autoscaling_group" "webserver_asg" {
+  lifecycle { create_before_destroy = true }
+  
+  name                = "web-asg - ${aws_launch_template.webserver_template.name}"
   desired_capacity    = "${length(var.availability_zone)}"
   max_size            = "${length(var.availability_zone)}"
   min_size            = "${length(var.availability_zone)}"
@@ -74,7 +79,9 @@ resource "aws_autoscaling_group" "webserver_asg" {
 ### Create application servers
 
 resource "aws_launch_template" "appserver_template" {
-  name_prefix            = "web"
+  lifecycle { create_before_destroy = true }
+  
+  name_prefix            = "app"
   image_id               = "${data.aws_ami.node_app_ami.id}"
   instance_type          = "${var.appserver_instance_type}"
   key_name               = "Mama's Bakery"
@@ -85,6 +92,9 @@ resource "aws_launch_template" "appserver_template" {
 }
 
 resource "aws_autoscaling_group" "appserver_asg" {
+  lifecycle { create_before_destroy = true }
+  
+  name                = "app-asg - ${aws_launch_template.appserver_template.name}"
   desired_capacity    = "${length(var.availability_zone)}"
   max_size            = "${length(var.availability_zone)}"
   min_size            = "${length(var.availability_zone)}"
