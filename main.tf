@@ -49,6 +49,32 @@ resource "aws_security_group" "private_security_group" {
     cidr_blocks = ["10.2.0.0/16"]
   }
 
+    ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "TCP"
+    security_groups  = ["${aws_security_group.alb_security_group.id}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "alb_security_group" {
+  name   = "ALB Security Group"
+  vpc_id = "${aws_vpc.mainVPC.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   egress {
     from_port   = 0
     to_port     = 0

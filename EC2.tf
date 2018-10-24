@@ -48,7 +48,7 @@ resource "aws_instance" "bastion" {
 resource "aws_launch_template" "webserver_template" {
   lifecycle { create_before_destroy = true }
   
-  name                   = "${var.deploy_type} - Web Server"
+  name                   = "${var.deploy_type}-WebServer"
   image_id               = "${data.aws_ami.node_web_ami.id}"
   instance_type          = "${var.webserver_instance_type}"
   key_name               = "Mama's Bakery"
@@ -81,7 +81,7 @@ resource "aws_autoscaling_group" "webserver_asg" {
 resource "aws_launch_template" "appserver_template" {
   lifecycle { create_before_destroy = true }
   
-  name                   = "${var.deploy_type} - App Server"
+  name                   = "${var.deploy_type}-AppServer"
   image_id               = "${data.aws_ami.node_app_ami.id}"
   instance_type          = "${var.appserver_instance_type}"
   key_name               = "Mama's Bakery"
