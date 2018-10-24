@@ -9,7 +9,6 @@ resource "aws_lb" "application-lb" {
 
 }
 
-
 resource "aws_lb" "network-lb" {
   name               = "${var.deploy_type}-nlb"
   internal           = true
@@ -18,4 +17,15 @@ resource "aws_lb" "network-lb" {
 
   enable_deletion_protection = false
 
+}
+
+resource "aws_lb_target_group" "webtg" {
+  name     = "${var.deploy_type}-webtg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.mainVPC.id}"
+}
+resource "aws_autoscaling_attachment" "asg_attachment_alb" {
+  autoscaling_group_name = "${aws_autoscaling_group.webserver_asg.id}"
+  alb_target_group_arn   = "${aws_alb_target_group.webtg.arn}"
 }
