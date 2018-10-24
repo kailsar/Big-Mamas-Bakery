@@ -27,7 +27,7 @@ resource "aws_lb_target_group" "webtg" {
 }
 resource "aws_autoscaling_attachment" "asg_attachment_alb" {
   autoscaling_group_name = "${aws_autoscaling_group.webserver_asg.id}"
-  alb_target_group_arn   = "${aws_alb_target_group.webtg.arn}"
+  alb_target_group_arn   = "${aws_lb_target_group.webtg.arn}"
 }
 
 resource "aws_lb_listener" "front_end" {
